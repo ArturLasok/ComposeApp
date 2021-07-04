@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "856067429157",
+    "project_id": "api-arcz",
+    "storage_bucket": "api-arcz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856067429157:android:b35b2798ca91f59fbd40cc",
+        "android_client_info": {
+          "package_name": "net.ddns.arcz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856067429157-fkdk2a84h28meg21cnllhfaeat0f3bbe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnxlC_3tgk32p8rLM4rDzx8yVAjnIESDU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856067429157-fkdk2a84h28meg21cnllhfaeat0f3bbe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
