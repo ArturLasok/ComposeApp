@@ -142,7 +142,7 @@ fun UserLogin(
                     trans.value = PasswordVisualTransformation()
                 }
 
-dfd
+
             },
             visualTransformation = trans.value,
             modifier = Modifier
@@ -155,7 +155,7 @@ dfd
                 color = Color.White,
                 text = "Hasło:"
             ) }
-
+//koment
         )
         Button(
             modifier = Modifier
