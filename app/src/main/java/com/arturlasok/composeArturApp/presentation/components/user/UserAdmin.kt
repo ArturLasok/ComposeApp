@@ -23,9 +23,10 @@ fun UserAdmin(
 
     ) {
 
-    var routeforward: String = "null"
+    val routeforward = "null"
     val loading = false
     val scaffoldState = rememberScaffoldState()
+
     userAdminViewModel.setFirebaseLang()
 
     RuchAppArturTheme(loading, isDarkTheme, isNetworkAvailable, isConMonVis) {
@@ -35,28 +36,12 @@ fun UserAdmin(
             snackbarHost = { scaffoldState.snackbarHostState },
             topBar = {
 
-                //Ustawienia tobappbarmenu
-                when (operacja) {
-                    9 -> {
-                        val routeback = Screen.ListaWiadomosci.route; PowrotButton(
-                            navController,
-                            routeback,
-                            routeforward
-                        )
-                    }
+                //Ustawienia Powrotu
+                val routeback = "null"; PowrotButton(navController, routeback, routeforward)
 
-
-                    else -> {
-                        Log.i(TAG, "Route Back:   val routeback = \"null\"; PowrotButton(")
-                        val routeback = "null"; PowrotButton(navController, routeback, routeforward)
-                    }
-
-
-                }
             })
         {
-            Text("User ADMIN + $operacja");
-
+           UserAdminProfile()
         }
     }
 }

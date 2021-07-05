@@ -109,6 +109,7 @@ class UserViewViewModel @Inject constructor(
                 if(task.isSuccessful) {
                     //Sprawdzenie i nawigacja do UserAdmina
                     FirebaseAuth.getInstance().signOut()
+                    loading.value = false
                     val route = Screen.UserView.route+"/5"
                     navController.navigate(route)
                 } else {  login_res.value = task.exception?.message.toString()
