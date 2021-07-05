@@ -1,14 +1,11 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
-import android.util.Log
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.arturlasok.composeArturApp.presentation.util.TAG
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun UserAdminProfile(){
-   Text("Profil")
-
-
-
+   val userId = FirebaseAuth.getInstance().currentUser?.uid
+   Text("Profil $userId")
 }
