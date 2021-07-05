@@ -44,13 +44,7 @@ fun UserAdmin(
                             routeforward
                         )
                     }
-                    8 -> {
-                        val routeback = Screen.ListaWiadomosci.route; PowrotButton(
-                            navController,
-                            routeback,
-                            routeforward
-                        )
-                    }
+
 
                     else -> {
                         Log.i(TAG, "Route Back:   val routeback = \"null\"; PowrotButton(")
