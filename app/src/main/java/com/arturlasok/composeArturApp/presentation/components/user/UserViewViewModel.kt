@@ -108,7 +108,7 @@ class UserViewViewModel @Inject constructor(
                     task->
                 if(task.isSuccessful) {
                     //Sprawdzenie i nawigacja do UserAdmina
-                    val route = Screen.UserAdmin.route+"/8"
+                    val route = Screen.UserView.route+"/5"
                     navController.navigate(route)
                 } else {  login_res.value = task.exception?.message.toString()
 

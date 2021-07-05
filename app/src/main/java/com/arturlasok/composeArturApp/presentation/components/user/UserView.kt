@@ -109,6 +109,44 @@ fun UserView(
                 }
 
             }
+            if(operacja==5) {
+                //Odzysk hasla odpowiedz po wyslaniu
+                Column(
+
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colors.background),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    //Icon(Icons.Outlined.AccountCircle, contentDescription = "Login screen")
+                    Text(
+                        modifier = Modifier.padding(top = 40.dp, bottom = 40.dp),
+                        text = "REJESTRACJA",
+                        color = Color.DarkGray,
+                        style = MaterialTheme.typography.h5,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        modifier = Modifier.padding(top = 5.dp, bottom = 20.dp,start = 10.dp, end=10.dp),
+                        textAlign = TextAlign.Center,
+                        text="Dziękuje za rejestrację. Możesz się zalogować")
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .background(Color.DarkGray),
+                        enabled = true,
+                        onClick = {
+                            val route = Screen.UserView.route + "/1"
+                            navController.navigate(route)
+                        },
+                    ) {
+                        Text("ZALOGUJ SIĘ")
+                    }
+                }
+
+            }
+
         }
     }
 }
