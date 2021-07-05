@@ -11,6 +11,7 @@ import com.arturlasok.composeArturApp.presentation.components.PowrotButton
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.ui.theme.RuchAppArturTheme
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun UserAdmin(
@@ -22,6 +23,8 @@ fun UserAdmin(
     operacja: Int,
 
     ) {
+    // Wyjscie z aktywnosci jezeli jest zalogowany uzytkownik
+    if(FirebaseAuth.getInstance().currentUser == null) { navController.popBackStack()}
 
     val routeforward = "null"
     val loading = false

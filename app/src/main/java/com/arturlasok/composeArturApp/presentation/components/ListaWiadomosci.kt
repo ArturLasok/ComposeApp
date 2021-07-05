@@ -36,11 +36,12 @@ fun ListaWiadomosci(
         isNetworkAvailable = isNetworkAvailable,
         isConMonVis = isConMonVis,
     ) {
-        var drawerState = rememberDrawerState(DrawerValue.Open)
+        val drawerState = rememberDrawerState(DrawerValue.Open)
 
         val scope = rememberCoroutineScope()
         val scaffoldState = rememberScaffoldState()
-
+        val drawerBackgroundColorSet : Color = if(isDarkTheme) { Color.Black}
+                                                else { Color.LightGray}
 
 
 
@@ -50,7 +51,7 @@ fun ListaWiadomosci(
                 drawerGesturesEnabled = listaWiadomosciviewModel.gestureEnable.value,
                 drawerShape = MaterialTheme.shapes.medium,
                 drawerElevation = DrawerDefaults.Elevation,
-                drawerBackgroundColor = MaterialTheme.colors.background,
+                drawerBackgroundColor = drawerBackgroundColorSet,
                 //drawerContentColor = contentColorFor(drawerBackgroundColor),
                 //drawerScrimColor = DrawerDefaults.scrimColor,
                 topBar = {

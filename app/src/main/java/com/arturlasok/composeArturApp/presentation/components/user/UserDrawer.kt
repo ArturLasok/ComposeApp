@@ -2,6 +2,7 @@ package com.arturlasok.composeArturApp.presentation.components.user
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -48,7 +49,12 @@ fun UserDrawer(
             Icon(
                 Icons.Filled.AccountBox,
                 contentDescription = null,
-                modifier = Modifier.size(130.dp),tint = MaterialTheme.colors.onBackground
+                modifier = Modifier
+                    .size(130.dp)
+                    .clickable(true,onClick = { navController.navigate(Screen.UserAdmin.route+"/9")} )
+
+
+                ,tint = MaterialTheme.colors.onBackground
             )
             Spacer(
                 modifier = Modifier

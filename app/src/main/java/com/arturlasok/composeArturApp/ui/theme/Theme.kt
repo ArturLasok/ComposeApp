@@ -10,7 +10,6 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import com.arturlasok.composeArturApp.presentation.components.ConnectivityMonitor
 import com.arturlasok.composeArturApp.presentation.components.ProgressBar
 
@@ -23,7 +22,7 @@ private val DarkColorPalette = darkColors(
     onSurface = onSurfaceDark,
     onPrimary = onPrimaryDark,
     onSecondary = onSecondaryDark,
-    onBackground = onBackgroudDark,
+    onBackground = onBackgroundDark,
 
 )
 
@@ -33,18 +32,11 @@ private val LightColorPalette = lightColors(
     secondary = secondary,
     background = background,
     surface =  surface,
-    onSurface = onSurface,
+    //onSurface = onSurface,
     onPrimary = onPrimary,
-    onSecondary = onSecondary,
-    onBackground = onBackgroud
-    /* Other default colors to override
+    //onSecondary = onSecondary,
+    onBackground = onBackground,
 
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
 
 @Composable
