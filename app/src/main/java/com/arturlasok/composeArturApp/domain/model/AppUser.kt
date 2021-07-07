@@ -16,10 +16,12 @@ init {
 }
     fun get_puid() : String? {
         return FirebaseAuth.getInstance().currentUser?.uid
-
     }
     fun get_pimie() : String? {
         return pimie
+    }
+    fun get_pnazwisko() : String? {
+        return pnazwisko
     }
     fun get_hash() : Int  { return hashCode() }
 

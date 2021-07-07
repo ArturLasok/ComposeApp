@@ -53,10 +53,20 @@ class UserAdminViewModel @Inject constructor(
         }
     //Admin profile operacje podczas widoku profilu
     fun UserAdminProfileEdit() {
-
         loading.value = true
 
+        FirebaseAuth.getInstance().currentUser?.uid?.let {
+            getUser.putUserToMysqlinAdmin(
+                puid = it,
+                token= token,
+                isNetworkAvailable = connectivityManager.isNetworkAvailable.value
+            ).onEach { data ->
+                Log.i(TAG, "Put user response: $data")
+                loading.value = false
+            }.launchIn(viewModelScope)
+        }
 
+/*
         getUser.getUserFlow(
             token = token,
             puid ="111",
@@ -75,7 +85,7 @@ class UserAdminViewModel @Inject constructor(
             loading.value = false
         }.launchIn(viewModelScope)
 
-
+*/
 
 
     }

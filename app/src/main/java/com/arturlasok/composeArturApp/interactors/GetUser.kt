@@ -12,7 +12,22 @@ class GetUser(
     private val wiadomoscService: WiadomoscService,
     private val appUser: AppUser,
 ) {
+   fun putUserToMysqlinAdmin(puid: String,token: String, isNetworkAvailable: Boolean):Flow<Boolean> =
+       flow {
+           if (isNetworkAvailable) {
+               try {
+                        val response = wiadomoscService.put_user_to_mysql(token,puid)
 
+                   emit(response.toBoolean())
+               } catch (e: Exception) {
+                   emit(false)
+                   Log.i(TAG, "putUserToMysqlinAdmin ${e.cause}")
+               }
+
+
+
+           } else { emit(false) }
+       }
     fun getUserFlow(puid: String, token: String, isNetworkAvailable: Boolean): Flow<AppUser> =
         flow {
 
