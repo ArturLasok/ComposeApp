@@ -20,6 +20,8 @@ init {
     fun get_pimie() : String? {
         return pimie
     }
+    fun get_mail(): String?
+    { return FirebaseAuth.getInstance().currentUser?.email }
     fun get_pnazwisko() : String? {
         return pnazwisko
     }
@@ -28,4 +30,12 @@ init {
     fun set_pid(pid: Long?) { this.pid = pid }
     fun set_pimie(pimie: String?) { this.pimie = pimie }
     fun set_pnazwisko(pnazwisko: String?) { this.pnazwisko = pnazwisko }
+    fun getUserData(): Map<String,String?> {
+        val pimie = get_pimie()
+        val pnazwisko = get_pnazwisko()
+        val pmail = get_mail()
+
+
+        return mapOf(Pair("imie",pimie),Pair("nazwisko",pnazwisko),Pair("mail",pmail))
+    }
 }

@@ -47,7 +47,7 @@ fun ListaWiadomosci(
 
             Scaffold(
                 scaffoldState = scaffoldState,
-                drawerContent =  {     UserDrawer(navController,listaWiadomosciviewModel.gestureEnable)          },
+                drawerContent =  {     UserDrawer(navController,listaWiadomosciviewModel.gestureEnable,listaWiadomosciviewModel)          },
                 drawerGesturesEnabled = listaWiadomosciviewModel.gestureEnable.value,
                 drawerShape = MaterialTheme.shapes.medium,
                 drawerElevation = DrawerDefaults.Elevation,

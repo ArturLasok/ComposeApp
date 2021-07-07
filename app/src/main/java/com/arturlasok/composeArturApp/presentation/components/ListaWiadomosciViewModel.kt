@@ -39,7 +39,7 @@ class ListaWiadomosciViewModel @Inject constructor(
 ): ViewModel() {
 
 
-
+    fun getUserData() = appUser.getUserData()
     val gestureEnable = mutableStateOf(false)
     val wiadomosci: MutableState<List<Wiadomosc>> = mutableStateOf(ArrayList())
     val page = mutableStateOf(1)
@@ -51,10 +51,6 @@ class ListaWiadomosciViewModel @Inject constructor(
         get() = _isRefreshing.asStateFlow()
 
     init {
-
-
-
-
        // clearDataBase()
         savedStateHandle.get<Int>(STATE_KEY_PAGE)?.let { p ->
             setPage(p)
@@ -70,6 +66,7 @@ class ListaWiadomosciViewModel @Inject constructor(
             Log.d(TAG, "testDrawerGesture ${appUser.get_puid()} / HashCode user ${appUser.get_hash()} make ON DRAWER GESTURE")
             gestureEnable.value = true }
     }
+
     fun onTriggerEvent(event: ListaWiadomosciEvent)
     {
         viewModelScope.launch {

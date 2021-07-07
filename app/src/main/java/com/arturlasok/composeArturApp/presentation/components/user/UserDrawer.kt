@@ -23,8 +23,10 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.LayoutModifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.arturlasok.composeArturApp.presentation.components.ListaWiadomosciViewModel
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.firebase.auth.FirebaseAuth
@@ -36,8 +38,8 @@ import ruchradzionkow.ruchappartur.R
 @Composable
 fun UserDrawer(
     navController : NavController,
-    gestureEnable: MutableState<Boolean>
-
+    gestureEnable: MutableState<Boolean>,
+    listaWiadomosciViewModel: ListaWiadomosciViewModel
                ) {
 
 
@@ -45,7 +47,9 @@ fun UserDrawer(
         Column(modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth()) {
-
+            Text(modifier = Modifier.padding(4.dp),
+                style = MaterialTheme.typography.h5,
+                text = "Cześć ${ listaWiadomosciViewModel.getUserData().getValue("imie")}")
             Icon(
                 Icons.Filled.AccountBox,
                 contentDescription = null,
@@ -56,6 +60,8 @@ fun UserDrawer(
 
                 ,tint = MaterialTheme.colors.onBackground
             )
+            Text(modifier = Modifier.padding(4.dp),
+                text = "e-mail: ${ listaWiadomosciViewModel.getUserData().getValue("mail")}")
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()

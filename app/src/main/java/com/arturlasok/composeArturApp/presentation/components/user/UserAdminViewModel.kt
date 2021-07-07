@@ -25,14 +25,10 @@ class UserAdminViewModel @Inject constructor(
     private val getUser: GetUser
     ): ViewModel() {
 
-
-
-
-    val user_name = mutableStateOf("")
     val loading = mutableStateOf(false)
 
-
     init {
+        setEvent(UserAdminEvent.UserAdminProfileAdd)
         setEvent(UserAdminEvent.UserAdminProfileEdit)
     }
         //ustawienie jezyka firebase
@@ -45,48 +41,52 @@ class UserAdminViewModel @Inject constructor(
 
                 when (event) {
                    is UserAdminEvent.UserAdminProfileEdit ->  { UserAdminProfileEdit() }
-
+                   is UserAdminEvent.UserAdminProfileAdd -> { UserAdminProfileAdd() }
                 }
             } catch (e: Exception) {
                 Log.d(TAG, "UserAdmin Exception: ${e.cause}")
             }
         }
     //Admin profile operacje podczas widoku profilu
-    fun UserAdminProfileEdit() {
+    fun UserAdminProfileAdd() {
         loading.value = true
 
-        FirebaseAuth.getInstance().currentUser?.uid?.let {
+        appUser.get_puid()?.let {
             getUser.putUserToMysqlinAdmin(
                 puid = it,
-                token= token,
+                token = token,
                 isNetworkAvailable = connectivityManager.isNetworkAvailable.value
             ).onEach { data ->
                 Log.i(TAG, "Put user response: $data")
                 loading.value = false
             }.launchIn(viewModelScope)
         }
+    }
 
-/*
-        getUser.getUserFlow(
-            token = token,
-            puid ="111",
-            isNetworkAvailable = connectivityManager.isNetworkAvailable.value
-        ).onEach { data ->
-            // Jezeli brak dancyh to blad
-            if(data.get_pimie()==null) {   Log.i(TAG, "User puid is null: ${data.get_pimie()}")}
-            else {
-                // Zapis wiadomosci data do viewmodel wiadomosci
-                Log.i(TAG, "User puid is OK: ${data.get_pimie()}")
+        fun UserAdminProfileEdit() {
+            appUser.get_puid()?.let {
+                getUser.getUserFlow(
+                    token = token,
+                    puid = it,
+                    isNetworkAvailable = connectivityManager.isNetworkAvailable.value
+                ).onEach { data ->
+                    // Jezeli brak dancyh to blad
+                    if(data.get_pimie()==null) {   Log.i(TAG, "User puid is null: ${data.get_pimie()}")} else {
+                        // Zapis wiadomosci data do viewmodel wiadomosci
+                        Log.i(TAG, "User puid is OK: ${data.get_pimie()}")
+
+                        appUser.set_pimie(data.get_pimie())
+                        appUser.set_pimie(data.get_pimie())
+
+                    }
 
 
+                    loading.value = false
+                }.launchIn(viewModelScope)
             }
 
-            user_name.value = data.get_pimie().toString()
-            loading.value = false
-        }.launchIn(viewModelScope)
-
-*/
 
 
-    }
+
+        }
 }
