@@ -9,12 +9,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.arturlasok.composeArturApp.domain.model.Wiadomosc
 import com.arturlasok.composeArturApp.interactors.SearchWiadomosci
 
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -28,12 +30,15 @@ const val STATE_KEY_LIST_POSITION = "wiadomosc.state.query.list_position"
 
 @HiltViewModel
 class ListaWiadomosciViewModel @Inject constructor(
+    private val appUser: AppUser,
     private val searchWiadomosci: SearchWiadomosci,
     private val connectivityManager: isOnline,
     private @Named("auth_token") val token: String,
     private val savedStateHandle: SavedStateHandle
 
 ): ViewModel() {
+
+
 
     val gestureEnable = mutableStateOf(false)
     val wiadomosci: MutableState<List<Wiadomosc>> = mutableStateOf(ArrayList())
@@ -61,8 +66,8 @@ class ListaWiadomosciViewModel @Inject constructor(
     }
     fun testDrawerGesture() {
         // Gesture Drawer Enable
-        Log.d(TAG, "testDrawerGesture")
-        if(FirebaseAuth.getInstance().currentUser!= null) {
+        if(appUser.get_puid() != null) {
+            Log.d(TAG, "testDrawerGesture ${appUser.get_puid()} / HashCode user ${appUser.get_hash()} make ON DRAWER GESTURE")
             gestureEnable.value = true }
     }
     fun onTriggerEvent(event: ListaWiadomosciEvent)

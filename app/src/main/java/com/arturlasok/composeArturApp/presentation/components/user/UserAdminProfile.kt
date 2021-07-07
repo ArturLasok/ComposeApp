@@ -5,7 +5,8 @@ import androidx.compose.runtime.Composable
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun UserAdminProfile(){
+fun UserAdminProfile(userAdminViewModel: UserAdminViewModel) {
    val userId = FirebaseAuth.getInstance().currentUser?.uid
-   Text("Profil $userId")
+   Text("Profil from firebase $userId, AppUser imie:${userAdminViewModel.user_name.value}")
+
 }

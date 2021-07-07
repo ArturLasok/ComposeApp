@@ -153,6 +153,8 @@ class UserViewViewModel @Inject constructor(
                     task->
                 if(task.isSuccessful) {
                     Log.d(TAG, "firebase test sukces")
+                    //Dodanie uid użytkownika przez api do bazy mysql poza Firebase
+
                     //Sprawdzenie danych i nawigacja do ustawien uzytkownika UserAdmin
                     val route = Screen.UserAdmin.route+"/9"
                     navController.navigate(route)

@@ -1,6 +1,7 @@
 package com.arturlasok.composeArturApp.network
 
 
+import com.arturlasok.composeArturApp.network.model.UserDto
 import com.arturlasok.composeArturApp.network.responses.WiadomoscSearchResponse
 import com.arturlasok.composeArturApp.network.model.WiadomoscDto
 import retrofit2.http.GET
@@ -8,7 +9,14 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface WiadomoscService {
+    // Odpowiedz w postaci pelnej do przetworzenia w search response
+    @GET("profil.php")
+    suspend fun search_user(
+        @Header("Authorization") token:String,
+        @Query("puid") puid:String,
 
+
+    ): UserDto
 
     // Odpowiedz w postaci pelnej do przetworzenia w search response
     @GET("testjson.php")

@@ -2,6 +2,8 @@ package com.arturlasok.composeArturApp.di
 
 import com.arturlasok.composeArturApp.cache.WiadomoscDao
 import com.arturlasok.composeArturApp.cache.model.WiadomoscEntityMapper
+import com.arturlasok.composeArturApp.domain.model.AppUser
+import com.arturlasok.composeArturApp.interactors.GetUser
 import com.arturlasok.composeArturApp.interactors.GetWiadomosc
 import com.arturlasok.composeArturApp.interactors.SearchWiadomosci
 import com.arturlasok.composeArturApp.network.WiadomoscService
@@ -15,7 +17,18 @@ import dagger.hilt.android.scopes.ViewModelScoped
 @Module
 @InstallIn(ViewModelComponent::class)
 object InteractorsModule {
+    @ViewModelScoped
+    @Provides
+    fun provideGetUser(
+        wiadomoscService: WiadomoscService,
+        appUser: AppUser
+    ) : GetUser {
+        return GetUser(
+            wiadomoscService = wiadomoscService,
+            appUser = appUser,
 
+        )
+    }
     @ViewModelScoped
     @Provides
     fun provideSearchWiadomosci(
