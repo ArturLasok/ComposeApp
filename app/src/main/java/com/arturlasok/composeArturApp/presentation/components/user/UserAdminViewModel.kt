@@ -22,10 +22,19 @@ class UserAdminViewModel @Inject constructor(
     private val connectivityManager: isOnline,
     private val getUser: GetUser
     ): ViewModel() {
+    fun getUserData() = appUser.getUserData()
+
+    val imie_edycja = mutableStateOf("")
+    val imie_nowe = mutableStateOf("")
+    val nazwisko_edycja = mutableStateOf("")
 
     val loading = mutableStateOf(false)
 
     init {
+
+        imie_edycja.value = appUser.get_pimie().value.toString()
+        nazwisko_edycja.value = appUser.get_pnazwisko().value.toString()
+
         setEvent(UserAdminEvent.UserAdminProfileAdd)
         setEvent(UserAdminEvent.UserAdminProfileUpdate)
     }

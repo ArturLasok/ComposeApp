@@ -49,7 +49,7 @@ fun UserDrawer(
         ) {
             Text(modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.h5,
-                text = "Cześć ${ listaWiadomosciViewModel.getUserData().getValue("imie")}")
+                text = "Cześć ${ listaWiadomosciViewModel.getUserData().getValue("imie").value}")
             Icon(
                 Icons.Filled.AccountBox,
                 contentDescription = "Twój profil",
@@ -61,7 +61,7 @@ fun UserDrawer(
                 ,tint = MaterialTheme.colors.onBackground
             )
             Text(modifier = Modifier.padding(4.dp),
-                text = "e-mail: ${ listaWiadomosciViewModel.getUserData().getValue("mail")}")
+                text = "e-mail: ${ listaWiadomosciViewModel.getUserData().getValue("mail").value}")
             Spacer(
                 modifier = Modifier
                     .fillMaxWidth()
