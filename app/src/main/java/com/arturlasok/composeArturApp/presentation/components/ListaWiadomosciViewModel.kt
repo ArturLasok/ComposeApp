@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.arturlasok.composeArturApp.domain.model.Wiadomosc
+import com.arturlasok.composeArturApp.interactors.GetUser
 import com.arturlasok.composeArturApp.interactors.SearchWiadomosci
 
 import com.arturlasok.composeArturApp.presentation.util.TAG
@@ -18,6 +19,7 @@ import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -30,6 +32,7 @@ const val STATE_KEY_LIST_POSITION = "wiadomosc.state.query.list_position"
 
 @HiltViewModel
 class ListaWiadomosciViewModel @Inject constructor(
+    private val getUser: GetUser,
     private val appUser: AppUser,
     private val searchWiadomosci: SearchWiadomosci,
     private val connectivityManager: isOnline,
@@ -59,11 +62,12 @@ class ListaWiadomosciViewModel @Inject constructor(
             setListScrollPosition(p)
         }
         onTriggerEvent(ListaWiadomosciEvent.NewSearchEvent)
+        onTriggerEvent(ListaWiadomosciEvent.UserProfileUpdate)
     }
     fun testDrawerGesture() {
         // Gesture Drawer Enable
         if(appUser.get_puid() != null) {
-            Log.d(TAG, "testDrawerGesture ${appUser.get_puid()} / HashCode user ${appUser.get_hash()} make ON DRAWER GESTURE")
+           // Log.d(TAG, "testDrawerGesture ${appUser.get_puid()} / HashCode user ${appUser.get_hash()} make ON DRAWER GESTURE")
             gestureEnable.value = true }
     }
 
@@ -77,6 +81,7 @@ class ListaWiadomosciViewModel @Inject constructor(
                 when(event){
                     is ListaWiadomosciEvent.NewSearchEvent -> { NewSearch() }
                     is ListaWiadomosciEvent.NextPageEvent -> { NextPage() }
+                    is ListaWiadomosciEvent.UserProfileUpdate -> { UserAdminProfileUpdate()}
                 }
             }
             catch (e:Exception) {
@@ -89,6 +94,26 @@ class ListaWiadomosciViewModel @Inject constructor(
         }
     }
 
+    fun UserAdminProfileUpdate() {
+
+        appUser.get_puid()?.let {
+            getUser.getUserFlow(
+                token = token,
+                puid = it,
+                isNetworkAvailable = connectivityManager.isNetworkAvailable.value
+            ).onEach { data ->
+
+
+                Log.i(TAG, "UserAdminProfileUpdate: ${data}")
+
+                loading.value = false
+            }.launchIn(viewModelScope)
+        }
+
+
+
+
+    }
 
 
     //Czyszczenie bazy danych z wiadomosciami
@@ -97,6 +122,7 @@ class ListaWiadomosciViewModel @Inject constructor(
             Log.i(TAG, "BAZA: $data")
         }.launchIn(viewModelScope)
     }
+
     //Nowe wyszukiwanie wszystkich wiadomosci
     fun NewSearch() {
         loading.value = true

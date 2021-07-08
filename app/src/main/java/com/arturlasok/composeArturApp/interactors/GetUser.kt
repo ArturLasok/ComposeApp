@@ -45,7 +45,7 @@ class GetUser(
 
                     emit(appUser)
                 } catch (e: Exception) {
-                    Log.i(TAG, "Pobieranie getUserFlow ${e.cause}")
+                    Log.i(TAG, "Pobieranie getUserFlow Exception: ${e.cause}")
                 }
             }
         }

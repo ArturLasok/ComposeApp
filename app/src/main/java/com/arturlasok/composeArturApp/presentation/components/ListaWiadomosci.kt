@@ -78,7 +78,7 @@ fun ListaWiadomosci(
                 content = {
 
                      listaWiadomosciviewModel.testDrawerGesture()
-                    Log.d(TAG, "gestureEnable in ListaWiadomosci: ${listaWiadomosciviewModel.gestureEnable.value}")
+                   // Log.d(TAG, "gestureEnable in ListaWiadomosci: ${listaWiadomosciviewModel.gestureEnable.value}")
                         ListaWiadomosciLazyCol(
                             wiadomosci = wiadomosci,
                             onChangeScrollPosition = listaWiadomosciviewModel::onChangeWiadomosciScrollPosition,

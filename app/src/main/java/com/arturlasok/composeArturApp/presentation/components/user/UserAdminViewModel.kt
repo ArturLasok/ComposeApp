@@ -1,13 +1,11 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
 import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.arturlasok.composeArturApp.interactors.GetUser
-import com.arturlasok.composeArturApp.interactors.SearchWiadomosci
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.firebase.auth.FirebaseAuth
@@ -29,7 +27,7 @@ class UserAdminViewModel @Inject constructor(
 
     init {
         setEvent(UserAdminEvent.UserAdminProfileAdd)
-        setEvent(UserAdminEvent.UserAdminProfileEdit)
+        setEvent(UserAdminEvent.UserAdminProfileUpdate)
     }
         //ustawienie jezyka firebase
         fun setFirebaseLang() {
@@ -40,7 +38,7 @@ class UserAdminViewModel @Inject constructor(
             try {
 
                 when (event) {
-                   is UserAdminEvent.UserAdminProfileEdit ->  { UserAdminProfileEdit() }
+                   is UserAdminEvent.UserAdminProfileUpdate ->  { UserAdminProfileUpdate() }
                    is UserAdminEvent.UserAdminProfileAdd -> { UserAdminProfileAdd() }
                 }
             } catch (e: Exception) {
@@ -57,29 +55,22 @@ class UserAdminViewModel @Inject constructor(
                 token = token,
                 isNetworkAvailable = connectivityManager.isNetworkAvailable.value
             ).onEach { data ->
-                Log.i(TAG, "Put user response: $data")
+                Log.i(TAG, "UserAdminProfileAdd: $data")
                 loading.value = false
             }.launchIn(viewModelScope)
         }
     }
 
-        fun UserAdminProfileEdit() {
+        fun UserAdminProfileUpdate() {
             appUser.get_puid()?.let {
                 getUser.getUserFlow(
                     token = token,
                     puid = it,
                     isNetworkAvailable = connectivityManager.isNetworkAvailable.value
                 ).onEach { data ->
-                    // Jezeli brak dancyh to blad
-                    if(data.get_pimie()==null) {   Log.i(TAG, "User puid is null: ${data.get_pimie()}")} else {
-                        // Zapis wiadomosci data do viewmodel wiadomosci
-                        Log.i(TAG, "User puid is OK: ${data.get_pimie()}")
 
-                        appUser.set_pimie(data.get_pimie())
-                        appUser.set_pimie(data.get_pimie())
 
-                    }
-
+                        Log.i(TAG, "UserAdminProfileUpdate: ${data}")
 
                     loading.value = false
                 }.launchIn(viewModelScope)

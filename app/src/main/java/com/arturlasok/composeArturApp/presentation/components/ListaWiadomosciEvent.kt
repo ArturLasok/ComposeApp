@@ -6,4 +6,6 @@ sealed class ListaWiadomosciEvent {
 
     object NextPageEvent:ListaWiadomosciEvent()
 
+    object UserProfileUpdate:ListaWiadomosciEvent()
+
 }

@@ -1,8 +1,6 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -46,13 +44,15 @@ fun UserDrawer(
 
         Column(modifier = Modifier
             .padding(10.dp)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+        ) {
             Text(modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.h5,
                 text = "Cześć ${ listaWiadomosciViewModel.getUserData().getValue("imie")}")
             Icon(
                 Icons.Filled.AccountBox,
-                contentDescription = null,
+                contentDescription = "Twój profil",
                 modifier = Modifier
                     .size(130.dp)
                     .clickable(true,onClick = { navController.navigate(Screen.UserAdmin.route+"/9")} )
@@ -68,6 +68,20 @@ fun UserDrawer(
                     .background(MaterialTheme.colors.onBackground)
                     .height(1.dp)
             )
+            Text(modifier = Modifier.padding(4.dp),style = MaterialTheme.typography.h5,
+                text = "Dodaj Wiadomość")
+            Text(modifier = Modifier.padding(4.dp),style = MaterialTheme.typography.h5,
+                text = "Usuń Wiadomość")
+            Text(modifier = Modifier.padding(4.dp),style = MaterialTheme.typography.h5,
+                text = "Twoje Wiadomości (5)")
+            Text(modifier = Modifier.padding(4.dp),style = MaterialTheme.typography.h5,
+                text = "Polubione Wiadomości (3)")
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colors.onBackground)
+                    .height(1.dp)
+            )
 
             Row() {
                Button(
@@ -76,12 +90,24 @@ fun UserDrawer(
 
                        .padding(top = 16.dp,end = 10.dp),
                    onClick = {
-                       gestureEnable.value = false
-                       FirebaseAuth.getInstance().signOut()
-                       val route = Screen.ListaWiadomosci.route
-                       navController.navigate(route) },
-                   content = { Text(color = Color.White, text ="WYLOGUJ") }
+
+
+                       navController.navigate(Screen.UserAdmin.route+"/9")
+                       },
+                   content = { Text(color = Color.White, text ="EDYTUJ PROFIL") }
                )
+                Button(
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onBackground),
+                    modifier = Modifier
+
+                        .padding(top = 16.dp,end = 10.dp),
+                    onClick = {
+                        gestureEnable.value = false
+                        FirebaseAuth.getInstance().signOut()
+                        val route = Screen.ListaWiadomosci.route
+                        navController.navigate(route) },
+                    content = { Text(color = Color.White, text ="WYLOGUJ") }
+                )
 
            }
 

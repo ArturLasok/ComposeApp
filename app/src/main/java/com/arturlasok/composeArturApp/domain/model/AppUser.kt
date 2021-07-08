@@ -13,6 +13,9 @@ private var pnazwisko: String? = "anonymous"
 
 init {
     Log.d(TAG, "MAKE NEW INIT ${hashCode()}")
+
+
+
 }
     fun get_puid() : String? {
         return FirebaseAuth.getInstance().currentUser?.uid
