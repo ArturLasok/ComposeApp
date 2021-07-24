@@ -4,6 +4,7 @@ sealed class UserAdminEvent {
 
     object UserAdminProfileUpdate : UserAdminEvent()
     object UserAdminProfileAdd:UserAdminEvent()
+    object UserAdminProfileTakePic:UserAdminEvent()
 
 
 }

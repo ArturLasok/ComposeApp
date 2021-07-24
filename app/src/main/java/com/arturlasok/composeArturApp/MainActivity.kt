@@ -1,14 +1,23 @@
 package com.arturlasok.composeArturApp
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
@@ -34,19 +43,28 @@ import com.arturlasok.composeArturApp.presentation.navigation.Screen
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ruchradzionkow.ruchappartur.R
+import java.io.File
+import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import javax.inject.Inject
-import com.google.firebase.auth.FirebaseAuth
 
 
 // Datastore init
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ustawienia")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+
+
+    private lateinit var cameraExecutor: Executor
 
     @Inject
     lateinit var isOnline: isOnline
@@ -76,13 +94,21 @@ class MainActivity : ComponentActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
+
         isConMonVis.value = false
 
     }
+
+
+
+
+
     @ExperimentalMaterialApi
     @ExperimentalComposeUiApi
         override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        cameraExecutor = ContextCompat.getMainExecutor(this)
 
         setContent {
             Log.d(TAG, "Is network in main activity: ${isOnline.isNetworkAvailable.value}")
@@ -99,8 +125,7 @@ class MainActivity : ComponentActivity() {
                     composable(Screen.ListaWiadomosci.route)
                         { navBackStackEntry ->
                        val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-                       val viewModel: ListaWiadomosciViewModel =
-                           viewModel("ListaWiadomosciViewModel",factory)
+                       val viewModel: ListaWiadomosciViewModel = viewModel("ListaWiadomosciViewModel",factory)
 
                             ListaWiadomosci(
 
@@ -193,7 +218,9 @@ class MainActivity : ComponentActivity() {
                             viewModel("UserAdminViewModel", factory)
 
                         navBackStackEntry.arguments?.let {
+
                            UserAdmin(
+                                 exec = cameraExecutor,
                                 isDarkTheme = ustawieniaDataStore.isDark.value,
                                 isNetworkAvailable = isOnline.isNetworkAvailable.value,
                                 isConMonVis = isConMonVis.value,
@@ -217,4 +244,5 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
 }

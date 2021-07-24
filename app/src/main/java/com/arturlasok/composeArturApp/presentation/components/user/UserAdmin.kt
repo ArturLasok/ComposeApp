@@ -7,9 +7,11 @@ import androidx.navigation.NavController
 import com.arturlasok.composeArturApp.presentation.components.PowrotButton
 import com.arturlasok.composeArturApp.ui.theme.RuchAppArturTheme
 import com.google.firebase.auth.FirebaseAuth
+import java.util.concurrent.Executor
 
 @Composable
 fun UserAdmin(
+    exec : Executor,
     isDarkTheme: Boolean,
     isNetworkAvailable: Boolean,
     isConMonVis:Boolean,
@@ -26,6 +28,7 @@ fun UserAdmin(
     val scaffoldState = rememberScaffoldState()
 
     userAdminViewModel.setFirebaseLang()
+    userAdminViewModel.setExec(exec)
 
     RuchAppArturTheme(loading, isDarkTheme, isNetworkAvailable, isConMonVis) {
         Scaffold(
@@ -39,7 +42,7 @@ fun UserAdmin(
 
             })
         {
-           UserAdminProfile(userAdminViewModel)
+           UserAdminProfile(userAdminViewModel,exec)
         }
     }
 }

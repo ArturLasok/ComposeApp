@@ -1,7 +1,12 @@
 package com.arturlasok.composeArturApp.di
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
+import androidx.activity.ComponentActivity
+import androidx.compose.ui.platform.LocalContext
 import com.arturlasok.composeArturApp.BaseApplication
+import com.arturlasok.composeArturApp.MainActivity
 import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -10,6 +15,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.Executor
 import javax.inject.Singleton
 
 
@@ -25,4 +31,5 @@ object AppModule  {
     fun provideUser() : AppUser {
        return AppUser()
     }
+
 }

@@ -7,10 +7,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Add
@@ -29,10 +26,12 @@ import androidx.compose.ui.unit.dp
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
 import com.google.firebase.auth.FirebaseAuth
 import ruchradzionkow.ruchappartur.R
+import java.util.concurrent.Executor
 
 @Composable
 fun UserAdminProfile(
-    userAdminViewModel: UserAdminViewModel
+    userAdminViewModel: UserAdminViewModel,
+    exec : Executor
 ) {
 
     Column(
@@ -42,9 +41,15 @@ fun UserAdminProfile(
 
 
     ){
+
+        Surface(modifier = Modifier.size(150.dp,150.dp)) {
+            CameraPreview(exec,userAdminViewModel =userAdminViewModel)
+        }
+
+
         Text(
             modifier = Modifier
-                .padding(start= 24.dp,top=14.dp,end=6.dp)
+                .padding(start = 24.dp, top = 14.dp, end = 6.dp)
                 .fillMaxWidth(),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.h5,
@@ -66,7 +71,7 @@ fun UserAdminProfile(
             )
 
             {   Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable {  }
+                modifier = Modifier.clickable { userAdminViewModel.setEvent(UserAdminEvent.UserAdminProfileTakePic) }
                     ,
                 ) {
                 Icon(
@@ -81,8 +86,9 @@ fun UserAdminProfile(
                     style = MaterialTheme.typography.h6,
                     text="USTAW ZDJĘCIE")
             }
-                Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier.padding(top=10.dp)
-                    .clickable {  }
+                Row(verticalAlignment = Alignment.CenterVertically,modifier = Modifier
+                    .padding(top = 10.dp)
+                    .clickable { }
                     ,
                 ){
 
