@@ -43,6 +43,7 @@ class ListaWiadomosciViewModel @Inject constructor(
 
 
     fun getUserData() = appUser.getUserData()
+    fun getUserIn() = appUser
     val gestureEnable = mutableStateOf(false)
     val wiadomosci: MutableState<List<Wiadomosc>> = mutableStateOf(ArrayList())
     val page = mutableStateOf(1)
@@ -104,7 +105,7 @@ class ListaWiadomosciViewModel @Inject constructor(
             ).onEach { data ->
 
 
-                Log.i(TAG, "UserAdminProfileUpdate: ${data}")
+                Log.i(TAG, "Load: ${data}")
 
                 loading.value = false
             }.launchIn(viewModelScope)

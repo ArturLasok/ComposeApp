@@ -1,22 +1,14 @@
 package com.arturlasok.composeArturApp
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -49,22 +41,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ruchradzionkow.ruchappartur.R
-import java.io.File
 import java.util.concurrent.Executor
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 
 // Datastore init
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ustawienia")
 @AndroidEntryPoint
+@ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
-
-
-
-    private lateinit var cameraExecutor: Executor
 
     @Inject
     lateinit var isOnline: isOnline
@@ -103,12 +88,11 @@ class MainActivity : ComponentActivity() {
 
 
 
-    @ExperimentalMaterialApi
-    @ExperimentalComposeUiApi
-        override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        cameraExecutor = ContextCompat.getMainExecutor(this)
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+
 
         setContent {
             Log.d(TAG, "Is network in main activity: ${isOnline.isNetworkAvailable.value}")
@@ -125,10 +109,10 @@ class MainActivity : ComponentActivity() {
                     composable(Screen.ListaWiadomosci.route)
                         { navBackStackEntry ->
                        val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-                       val viewModel: ListaWiadomosciViewModel = viewModel("ListaWiadomosciViewModel",factory)
+                       val viewModel: ListaWiadomosciViewModel =
+                           viewModel(key = "ListaWiadomosciViewModel",factory = factory)
 
                             ListaWiadomosci(
-
                                 navController = navController,
                                 listaWiadomosciviewModel = viewModel,
                                 isNetworkAvailable = isOnline.isNetworkAvailable.value,
@@ -147,7 +131,7 @@ class MainActivity : ComponentActivity() {
                       { navBackStackEntry ->
                         val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
                         val viewModel: SzczegolyWiadomosciViewModel =
-                            viewModel("SzczegolyWiadomosciViewModel", factory)
+                            viewModel(key="SzczegolyWiadomosciViewModel",factory = factory)
 
                           navBackStackEntry.arguments?.let {
                               SzczegolyWiadomosci(
@@ -167,7 +151,7 @@ class MainActivity : ComponentActivity() {
                     { navBackStackEntry ->
                         val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
                         val viewModel: SettingsViewModel =
-                            viewModel("SettingsViewModel", factory)
+                            viewModel(key="SettingsViewModel",factory = factory)
 
                         navBackStackEntry.arguments?.let {
                            SettingsView(
@@ -180,6 +164,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                     }
+
                     //Nawgiuj do UserView
                     composable(Screen.UserView.route+ "/{operacja}",
                         arguments = listOf(navArgument("operacja") {
@@ -188,22 +173,24 @@ class MainActivity : ComponentActivity() {
                     { navBackStackEntry ->
                         val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
                         val viewModel: UserViewViewModel =
-                            viewModel("UserViewViewModel", factory)
+                            viewModel(key="UserViewViewModel", factory = factory)
 
                         navBackStackEntry.arguments?.let {
                             viewModel.passRecButtonEnable.value = true
                             viewModel.loginButtonEnable.value=true
                             viewModel.registerButtonEnable.value=true
 
-                            UserView(
-                                isDarkTheme = ustawieniaDataStore.isDark.value,
-                                isNetworkAvailable = isOnline.isNetworkAvailable.value,
-                                isConMonVis = isConMonVis.value,
-                                navController = navController,
-                                userViewViewModel = viewModel,
-                                operacja = it.getInt("operacja"),
 
-                            )
+                                UserView(
+                                    isDarkTheme = ustawieniaDataStore.isDark.value,
+                                    isNetworkAvailable = isOnline.isNetworkAvailable.value,
+                                    isConMonVis = isConMonVis.value,
+                                    navController = navController,
+                                    userViewViewModel = viewModel,
+                                    operacja = it.getInt("operacja"),
+
+                                    )
+
                         }
 
                     }
@@ -215,12 +202,12 @@ class MainActivity : ComponentActivity() {
                     { navBackStackEntry ->
                         val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
                         val viewModel: UserAdminViewModel =
-                            viewModel("UserAdminViewModel", factory)
+                            viewModel(key="UserAdminViewModel", factory=factory)
 
                         navBackStackEntry.arguments?.let {
 
                            UserAdmin(
-                                 exec = cameraExecutor,
+
                                 isDarkTheme = ustawieniaDataStore.isDark.value,
                                 isNetworkAvailable = isOnline.isNetworkAvailable.value,
                                 isConMonVis = isConMonVis.value,

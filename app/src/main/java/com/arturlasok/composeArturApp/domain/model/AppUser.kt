@@ -9,8 +9,8 @@ import com.google.firebase.auth.FirebaseAuth
 class AppUser() {
 
 private var pid:Long? = 0
-private var pimie:MutableState<String?> = mutableStateOf("anonymous")
-private var pnazwisko:MutableState<String?> = mutableStateOf("anonymous")
+private var pimie:MutableState<String?> = mutableStateOf("")
+private var pnazwisko:MutableState<String?> = mutableStateOf("")
 
 
 init {
@@ -19,6 +19,11 @@ init {
 
 
 }
+    fun reset_appUser() {
+        set_pid(0)
+        set_pnazwisko("")
+        set_pimie("")
+    }
     fun get_puid() : String? {
         return FirebaseAuth.getInstance().currentUser?.uid
     }

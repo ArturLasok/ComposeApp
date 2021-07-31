@@ -1,6 +1,7 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
 import android.graphics.Paint
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.scrollable
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
+import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.google.firebase.auth.FirebaseAuth
 import ruchradzionkow.ruchappartur.R
 import java.util.concurrent.Executor
@@ -31,20 +33,15 @@ import java.util.concurrent.Executor
 @Composable
 fun UserAdminProfile(
     userAdminViewModel: UserAdminViewModel,
-    exec : Executor
+
 ) {
 
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
             .fillMaxWidth()
-
-
     ){
 
-        Surface(modifier = Modifier.size(150.dp,150.dp)) {
-            CameraPreview(exec,userAdminViewModel =userAdminViewModel)
-        }
 
 
         Text(
@@ -71,7 +68,7 @@ fun UserAdminProfile(
             )
 
             {   Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { userAdminViewModel.setEvent(UserAdminEvent.UserAdminProfileTakePic) }
+                modifier = Modifier.clickable {}
                     ,
                 ) {
                 Icon(
@@ -106,23 +103,62 @@ fun UserAdminProfile(
             }
         }
 
-        //imie_nowe.value = userAdminViewModel.getUserData().getValue("imie").value.toString()
+        Text(
+            modifier = Modifier
+                .padding(start = 24.dp, top = 14.dp, end = 6.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.h5,
+            text = "Uzupełnij proszę swój profil")
+        //Zmiana imienia uzytkownika
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
             singleLine = true,
             value = userAdminViewModel.imie_nowe.value,
-            onValueChange = {  if(it.length<20) { userAdminViewModel.imie_nowe.value = it}; },
+            onValueChange = {
+                userAdminViewModel.saveButtonEnable.value = true
+                if(it.length<100) { userAdminViewModel.imie_nowe.value = it}; },
             label = { Text(
                 color = Color.White,
-                text = "Hasło:"
+                text = "Twoje Imię:"
             ) }
 
         )
+        //Zmiana nazwiska uzytkownika
+        TextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            singleLine = true,
+            value = userAdminViewModel.nazwisko_nowe.value,
+            onValueChange = {
+                userAdminViewModel.saveButtonEnable.value = true
+                if(it.length<100) { userAdminViewModel.nazwisko_nowe.value = it}; },
+            label = { Text(
+                color = Color.White,
+                text = "Twoje Nazwisko:"
+            ) }
+
+        )
+        Button(
+            enabled = userAdminViewModel.saveButtonEnable.value,
+            colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.onBackground),
+            modifier = Modifier
+
+                .padding(start = 16.dp, top = 16.dp,end = 10.dp, bottom = 20.dp),
+            onClick = {
+                userAdminViewModel.saveButtonEnable.value = false
+                userAdminViewModel.setEvent(UserAdminEvent.UpdateAppUserClass)
+                userAdminViewModel.setEvent(UserAdminEvent.UserAdminProfileSave)
+
+            },
+            content = { Text(color = Color.White, text ="ZAPISZ") }
+        )
 
 
-
+        Log.i(TAG, "fields time: ${userAdminViewModel.hashCode()}")
 
     }
 

@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +26,7 @@ class UserViewViewModel @Inject constructor(
 
     ): ViewModel() {
     //
+
     val passRecButtonEnable = mutableStateOf(true)
     //login register enable
     val registerButtonEnable = mutableStateOf(true)
@@ -153,11 +155,17 @@ class UserViewViewModel @Inject constructor(
                     task->
                 if(task.isSuccessful) {
                     Log.d(TAG, "firebase test sukces")
-                    //Dodanie uid użytkownika przez api do bazy mysql poza Firebase
+
 
                     //Sprawdzenie danych i nawigacja do ustawien uzytkownika UserAdmin
-                    val route = Screen.UserAdmin.route+"/9"
-                    navController.navigate(route)
+                    val route = Screen.UserAdmin.route+"/7"
+                   // val navOpt = NavOptions.Builder().setPopUpTo(
+                   //     route,true).build()
+
+
+                    navController.navigate(route) {
+                        popUpTo(Screen.UserView.route+"/{operacja}") { Log.d(TAG, "NAVIGATION!!!!")
+                            inclusive=true } }
                 } else {
                     login_res.value = task.exception?.message.toString()
                     if("We have blocked" in login_res.value) login_res.value="Konto zablokowane. Zrestartuj hasło"

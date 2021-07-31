@@ -7,14 +7,23 @@ import com.arturlasok.composeArturApp.network.model.WiadomoscDto
 import retrofit2.http.*
 
 interface WiadomoscService {
+    @FormUrlEncoded
+    @POST("profil.php")
+    suspend fun update_user_to_mysql(
+        @Header("Authorization") token:String,
+        @Field("puid") puid:String,
+        @Field("pimie") pimie:String,
+        @Field("pnazwisko") pnazwisko:String,
+        @Field("saveProfile") saveProfile:String,
+
+    ): String
+
     // Zapis uzytkownika do bazy jezeli jeszcze nie istnieje
     @FormUrlEncoded
     @POST("profil.php")
     suspend fun put_user_to_mysql(
         @Header("Authorization") token:String,
         @Field("puid") puid:String,
-
-
         ): String
 
     // Wyszukiawnie uzytkownika w bazie mysql

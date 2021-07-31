@@ -4,7 +4,10 @@ sealed class UserAdminEvent {
 
     object UserAdminProfileUpdate : UserAdminEvent()
     object UserAdminProfileAdd:UserAdminEvent()
-    object UserAdminProfileTakePic:UserAdminEvent()
+    object UserAdminProfileSave:UserAdminEvent()
+    object UpdateAppUserClass:UserAdminEvent()
+    object UserAdminFieldsEditUpdate:UserAdminEvent()
+
 
 
 }

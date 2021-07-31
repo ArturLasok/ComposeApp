@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.arturlasok.composeArturApp.presentation.components.user.UserDrawer
@@ -14,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-@ExperimentalMaterialApi
+
 @Composable
 fun ListaWiadomosci(
 
@@ -47,12 +48,12 @@ fun ListaWiadomosci(
 
             Scaffold(
                 scaffoldState = scaffoldState,
-                drawerContent =  {     UserDrawer(navController,listaWiadomosciviewModel.gestureEnable,listaWiadomosciviewModel)          },
+                drawerContent =  {     UserDrawer(navController,listaWiadomosciviewModel.gestureEnable,listaWiadomosciviewModel, drawerState,scope,scaffoldState)          },
                 drawerGesturesEnabled = listaWiadomosciviewModel.gestureEnable.value,
                 drawerShape = MaterialTheme.shapes.medium,
                 drawerElevation = DrawerDefaults.Elevation,
                 drawerBackgroundColor = drawerBackgroundColorSet,
-                //drawerContentColor = contentColorFor(drawerBackgroundColor),
+                // drawerContentColor = contentColorFor(drawerBackgroundColor),
                 //drawerScrimColor = DrawerDefaults.scrimColor,
                 topBar = {
 

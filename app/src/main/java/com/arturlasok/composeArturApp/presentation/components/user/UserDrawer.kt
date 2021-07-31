@@ -1,5 +1,6 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,18 +27,23 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.arturlasok.composeArturApp.presentation.components.ListaWiadomosciViewModel
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
+import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ruchradzionkow.ruchappartur.R
 
 
-@ExperimentalMaterialApi
+
 @Composable
 fun UserDrawer(
     navController : NavController,
     gestureEnable: MutableState<Boolean>,
-    listaWiadomosciViewModel: ListaWiadomosciViewModel
+    listaWiadomosciViewModel: ListaWiadomosciViewModel,
+    drawerState: DrawerState,
+    scope:CoroutineScope,
+    scaffoldState: ScaffoldState
                ) {
 
 
@@ -103,9 +109,22 @@ fun UserDrawer(
                         .padding(top = 16.dp,end = 10.dp),
                     onClick = {
                         gestureEnable.value = false
+                        listaWiadomosciViewModel.getUserIn().reset_appUser()
                         FirebaseAuth.getInstance().signOut()
-                        val route = Screen.ListaWiadomosci.route
-                        navController.navigate(route) },
+                        scope.launch {
+
+
+
+                            scaffoldState.drawerState.close()
+
+                        }
+                       val route = Screen.ListaWiadomosci.route
+                       navController.navigate(route) {
+                          popUpTo(Screen.ListaWiadomosci.route) { Log.d(TAG, "NAVIGATION!!!!")
+                              } }
+
+
+                              },
                     content = { Text(color = Color.White, text ="WYLOGUJ") }
                 )
 

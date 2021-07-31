@@ -20,6 +20,12 @@ import com.arturlasok.composeArturApp.presentation.util.TAG
 
 @Composable
 fun PowrotButton(navController: NavController,routeback: String, routeforward: String) {
+var route_opis = "null"
+    Log.i(TAG, "Error Powrotbutton nc:${navController} rb:${routeback} rf:${routeforward}")
+    when(routeforward) {
+         "UserView/2" -> route_opis = "Rejestracja"
+         "listaWiadomosci" -> route_opis = "Przejdź dalej"
+    }
 
 
     Surface(
@@ -37,48 +43,53 @@ fun PowrotButton(navController: NavController,routeback: String, routeforward: S
                 .padding(start = 12.dp, end = 12.dp)) {
 
 
+if(route_opis!="Przejdź dalej") {
+    Row(
+        modifier = Modifier
+            .clickable(
 
-            Row(
-                modifier = Modifier
-                    .clickable(
+                onClick = {
+                    if (routeback != "null") {
+                        navController.navigate(routeback)
+                        Log.i(TAG, "Route Back: $routeback")
+                    } else {
+                        Log.i(TAG, "Route Back: NavigateUp")
+                        navController.navigateUp()
+                    }
+                }
+            )
+    ) {
 
-                        onClick = {
-                            if(routeback!="null") {
-                            navController.navigate(routeback)
-                                Log.i(TAG, "Route Back: $routeback")
-                                  } else {
-                                Log.i(TAG, "Route Back: NavigateUp")
-                                      navController.navigateUp() } }
-                    )
-            ) {
-
-                Icon(
-                    Icons.Filled.ArrowBack,
-                    contentDescription = "Przejdź do poprzedniej aktywności",
-                )
+        Icon(
+            Icons.Filled.ArrowBack,
+            contentDescription = "Przejdź do poprzedniej aktywności",
+        )
 
 
 
-                Text(
-                    text = "Powrót", color = MaterialTheme.colors.onSecondary,
-                    style = MaterialTheme.typography.h5,modifier = Modifier.padding(start=10.dp)
-                )
-            }
+        Text(
+            text = "Powrót", color = MaterialTheme.colors.onSecondary,
+            style = MaterialTheme.typography.h5, modifier = Modifier.padding(start = 10.dp)
+        )
+    }
+
+} else { Row()  { }}
+
             if(routeforward!="null") {
-               Row(
+                Row(
                     modifier = Modifier
                         .clickable(
 
                             onClick = {
-                                    try {
-                                        navController.navigate(routeforward)
+                                try {
+                                    navController.navigate(routeforward)
 
-                                    } catch (e:Exception) {  Log.d(TAG, "nav exb: $e")}
+                                } catch (e:Exception) {  Log.d(TAG, "nav exb: $e")}
                             }
                         )
                 ) {
                     Text(
-                        text = "Rejestracja",
+                        text = route_opis,
                         color = MaterialTheme.colors.onSecondary,
                         style = MaterialTheme.typography.h5,
                         modifier = Modifier.padding(end = 10.dp)
@@ -95,9 +106,9 @@ fun PowrotButton(navController: NavController,routeback: String, routeforward: S
             }
         }
     }
-
-
-
-
-
 }
+
+
+
+
+

@@ -22,6 +22,7 @@ import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.ui.theme.RuchAppArturTheme
 import com.google.firebase.auth.FirebaseAuth
 
+
 @ExperimentalComposeUiApi
 @Composable
 fun UserView(
@@ -39,8 +40,11 @@ fun UserView(
     val loading = userViewViewModel.loading.value
     val scaffoldState = rememberScaffoldState()
     val routeback = "null"
-    // Wyjscie z aktywnosci jezeli jest zalogowany uzytkownik
-    if(FirebaseAuth.getInstance().currentUser != null) { navController.popBackStack()}
+
+
+
+
+
 
     RuchAppArturTheme(loading, isDarkTheme, isNetworkAvailable, isConMonVis) {
         Scaffold(
@@ -101,7 +105,9 @@ fun UserView(
                         enabled = true,
                         onClick = {
                             val route = Screen.UserView.route + "/1"
-                            navController.navigate(route)
+                            navController.navigate(route) {
+                                popUpTo(Screen.UserView.route+"/{operacja}") { Log.d(TAG, "NAVIGATION!!!!")
+                                    inclusive=true } }
                         },
                     ) {
                         Text("ZALOGUJ SIĘ")
@@ -139,7 +145,9 @@ fun UserView(
                         enabled = true,
                         onClick = {
                             val route = Screen.UserView.route + "/1"
-                            navController.navigate(route)
+                            navController.navigate(route) {
+                                popUpTo(Screen.UserView.route+"/{operacja}") { Log.d(TAG, "NAVIGATION!!!!")
+                                    inclusive=true } }
                         },
                     ) {
                         Text("ZALOGUJ SIĘ")
