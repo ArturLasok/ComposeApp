@@ -106,7 +106,7 @@ fun UserView(
                         onClick = {
                             val route = Screen.UserView.route + "/1"
                             navController.navigate(route) {
-                                popUpTo(Screen.UserView.route+"/{operacja}") { Log.d(TAG, "NAVIGATION!!!!")
+                                popUpTo(Screen.UserView.route+"/{operacja}") {
                                     inclusive=true } }
                         },
                     ) {

@@ -120,7 +120,7 @@ fun UserDrawer(
                         }
                        val route = Screen.ListaWiadomosci.route
                        navController.navigate(route) {
-                          popUpTo(Screen.ListaWiadomosci.route) { Log.d(TAG, "NAVIGATION!!!!")
+                          popUpTo(Screen.ListaWiadomosci.route) {
                               } }
 
 

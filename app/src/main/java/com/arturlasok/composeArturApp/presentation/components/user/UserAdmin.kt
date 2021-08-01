@@ -26,7 +26,7 @@ fun UserAdmin(
     ) {
     // Wyjscie z aktywnosci jezeli jest zalogowany uzytkownik
     if(FirebaseAuth.getInstance().currentUser == null) {
-        Log.i(TAG, "Error FB user null")
+
         navController.popBackStack()}
 
     var routeforward = "null"
@@ -44,19 +44,6 @@ fun UserAdmin(
             topBar = {
                 if(operacja==7) {
                     routeforward = Screen.ListaWiadomosci.route
-                    if (navController.previousBackStackEntry?.destination?.route?.startsWith("UserView") == true) {
-                        Log.d(TAG, "navController.backQueue.firstOrNull():${navController.backQueue.first().destination.route}" )
-                        Log.d(TAG,"navController.currentBackStackEntry.toString():${navController.currentBackStackEntry?.destination?.route}" )
-                        Log.d(TAG,"navController.previousBackStackEntry:${navController.previousBackStackEntry?.destination?.route}" )
-                        // Log.d(TAG,"navController.enableOnBackPressed(false):${navController.enableOnBackPressed(false)}" )
-                        Log.d(TAG,"navController.currentDestination:${navController.currentDestination}")
-                        //val rr = navController.previousBackStackEntry?.destination
-                       // if (rr != null) {
-                        //    navController.currentBackStackEntry?.destination?.parent?.remove(rr)
-                        //}
-
-
-                    }
                 }
             //Ustawienia Powrotu
              val routeback = "null"; PowrotButton(navController, routeback, routeforward)

@@ -71,7 +71,7 @@ fun RuchAppArturTheme(
                 content()
             }
             ProgressBar(isDisplayed = displayProgressBar)
-            //ProgressBar(isDisplayed = true)
+
         }
     }
 }

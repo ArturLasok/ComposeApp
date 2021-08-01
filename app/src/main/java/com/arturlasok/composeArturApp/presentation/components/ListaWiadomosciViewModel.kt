@@ -68,7 +68,6 @@ class ListaWiadomosciViewModel @Inject constructor(
     fun testDrawerGesture() {
         // Gesture Drawer Enable
         if(appUser.get_puid() != null) {
-           // Log.d(TAG, "testDrawerGesture ${appUser.get_puid()} / HashCode user ${appUser.get_hash()} make ON DRAWER GESTURE")
             gestureEnable.value = true }
     }
 

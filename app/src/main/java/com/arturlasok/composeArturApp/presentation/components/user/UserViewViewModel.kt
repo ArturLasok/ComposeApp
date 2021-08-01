@@ -159,12 +159,10 @@ class UserViewViewModel @Inject constructor(
 
                     //Sprawdzenie danych i nawigacja do ustawien uzytkownika UserAdmin
                     val route = Screen.UserAdmin.route+"/7"
-                   // val navOpt = NavOptions.Builder().setPopUpTo(
-                   //     route,true).build()
 
 
                     navController.navigate(route) {
-                        popUpTo(Screen.UserView.route+"/{operacja}") { Log.d(TAG, "NAVIGATION!!!!")
+                        popUpTo(Screen.UserView.route+"/{operacja}") {
                             inclusive=true } }
                 } else {
                     login_res.value = task.exception?.message.toString()
