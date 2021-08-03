@@ -68,7 +68,11 @@ fun UserAdminProfile(
             )
 
             {   Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable {}
+                modifier = Modifier.clickable(onClick = {
+
+                    userAdminViewModel.setEvent(UserAdminEvent.FotoActivityIntent)
+
+                })
                     ,
                 ) {
                 Icon(

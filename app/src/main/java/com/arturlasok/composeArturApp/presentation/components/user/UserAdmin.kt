@@ -32,7 +32,7 @@ fun UserAdmin(
     var routeforward = "null"
     val loading = false
     val scaffoldState = rememberScaffoldState()
-
+    userAdminViewModel.isDark.value = isDarkTheme
 
 
 

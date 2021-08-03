@@ -7,7 +7,7 @@ sealed class UserAdminEvent {
     object UserAdminProfileSave:UserAdminEvent()
     object UpdateAppUserClass:UserAdminEvent()
     object UserAdminFieldsEditUpdate:UserAdminEvent()
-
+    object FotoActivityIntent:UserAdminEvent()
 
 
 }

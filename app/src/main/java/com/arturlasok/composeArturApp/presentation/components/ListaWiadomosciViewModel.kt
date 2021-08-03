@@ -2,8 +2,6 @@ package com.arturlasok.composeArturApp.presentation.components
 
 
 import android.util.Log
-import androidx.compose.material.DrawerState
-import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -13,13 +11,9 @@ import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.arturlasok.composeArturApp.domain.model.Wiadomosc
 import com.arturlasok.composeArturApp.interactors.GetUser
 import com.arturlasok.composeArturApp.interactors.SearchWiadomosci
-
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.presentation.util.isOnline
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject

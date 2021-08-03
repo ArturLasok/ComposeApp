@@ -1,10 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Nothing here matters EXCEPT THE STATUS BAR COLOR. The theme is obtained from [Theme.kt] -->
+    <!-- DAY Nothing here matters EXCEPT THE STATUS BAR COLOR. The theme is obtained from [Theme.kt] -->
+    <style name="Theme.ArturFont" parent="Theme.MaterialComponents">
+        <item name="android:fontWeight">600</item>
+        <item name="fontWeight">600</item>
+        <item name="fontFamily">sans-serif-medium</item>
+
+    </style>
     <style name="Theme.RuchAppArtur" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/backlight</item>
+        <item name="colorPrimaryVariant">@color/back</item>
+        <item name="colorOnPrimary">@color/back</item>
+
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/backlight</item>
+        <item name="android:navigationBarColor">@color/backlight</item>
+    </style>
+    <!-- NIGHT -->
+    <style name="Theme.RuchAppArturnight" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/back</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/backlight</item>
 
         <item name="elevationOverlayEnabled">false</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/back</item>

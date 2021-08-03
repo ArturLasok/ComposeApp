@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Nothing here matters EXCEPT THE STATUS BAR COLOR. The theme is obtained from [Theme.kt] -->
-    <style name="Theme.RuchAppArtur" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.RuchAppArturnight" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -10,4 +10,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/back</item>
         <item name="android:navigationBarColor">@color/back</item>
     </style>
+    <style name="Theme.RuchAppArtur.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.RuchAppArtur.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.RuchAppArtur.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

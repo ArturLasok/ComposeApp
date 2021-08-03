@@ -1,29 +1,23 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
-import android.Manifest
-import android.app.Application
-import android.net.Uri
+import android.content.Intent
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.*
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.intl.Locale
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arturlasok.composeArturApp.BaseApplication
+import com.arturlasok.composeArturApp.FotoActivity
+import com.arturlasok.composeArturApp.Hilt_MainActivity
 import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.arturlasok.composeArturApp.interactors.GetUser
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import dagger.hilt.internal.aggregatedroot.codegen._com_arturlasok_composeArturApp_BaseApplication
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import ruchradzionkow.ruchappartur.R
-import java.nio.ByteBuffer
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.concurrent.Executor
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -33,11 +27,11 @@ class UserAdminViewModel @Inject constructor(
     private @Named("auth_token") val token: String,
     private val connectivityManager: isOnline,
     private val getUser: GetUser,
-
+    private val app: BaseApplication
     ): ViewModel() {
     //klawisz ZAPISZ odblokowanie przy zmianie konfiguracji
     val saveButtonEnable = mutableStateOf(true)
-
+    val isDark = mutableStateOf(false)
     // Dane do formularza edycji w profilu
     val imie_edycja = mutableStateOf("")
     val imie_nowe = mutableStateOf("")
@@ -75,6 +69,7 @@ class UserAdminViewModel @Inject constructor(
                    is UserAdminEvent.UserAdminProfileSave -> { UserAdminProfileSave() }
                    is UserAdminEvent.UpdateAppUserClass -> { UserAdminProfileUpdateAppUserClass() }
                    is UserAdminEvent.UserAdminFieldsEditUpdate -> {UserAdminFieldsEditUpdate() }
+                   is UserAdminEvent.FotoActivityIntent -> { FotoActivityIntent() }
 
 
                 }
@@ -82,6 +77,19 @@ class UserAdminViewModel @Inject constructor(
                 Log.d(TAG, "UserAdmin Exception: ${e.cause}")
             }
         }
+// EVENT FotoActivity open
+fun FotoActivityIntent() {
+    try {
+        val intent_message = FirebaseAuth.getInstance().currentUser?.uid
+        val intent_source = Intent(app.applicationContext, FotoActivity::class.java).apply {
+            putExtra(EXTRA_MESSAGE, intent_message+">><<"+isDark.value)
+
+
+        }
+        intent_source.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        app.startActivity(intent_source)
+    } catch (e: Exception) {  Log.d(TAG, "Intent Exception: ${e.cause} ${e.message} ${e.toString()}")}
+}
 //EVENT Aktualizacja danych do profile fields -----------------------------------------------------
     fun UserAdminFieldsEditUpdate() {
         imie_edycja.value = appUser.get_pimie().value ?:""
