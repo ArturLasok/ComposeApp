@@ -34,7 +34,7 @@ import ruchradzionkow.ruchappartur.R
 import java.util.regex.Pattern
 
 
-@ExperimentalComposeUiApi
+
 @Composable
 fun UserLogin(
        navController: NavController,
@@ -48,7 +48,7 @@ fun UserLogin(
 
     val email =  rememberSaveable { mutableStateOf("") }
     val password =  rememberSaveable { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
+    //val keyboardController = LocalSoftwareKeyboardController.current
     Column(modifier = Modifier
         .fillMaxWidth()
         .verticalScroll(rememberScrollState())
@@ -167,7 +167,7 @@ fun UserLogin(
             enabled = userViewViewModel.loginButtonEnable.value,
             onClick = {
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                keyboardController?.hide()
+                //keyboardController?.hide()
 
                 userViewViewModel.checkLoginData(email,password,scaffoldState,navController,scope)
 

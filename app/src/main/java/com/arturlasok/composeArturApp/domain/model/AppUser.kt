@@ -1,8 +1,11 @@
 package com.arturlasok.composeArturApp.domain.model
 
+import android.graphics.Bitmap
+import android.media.Image
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.ImageBitmap
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.google.firebase.auth.FirebaseAuth
 
@@ -11,6 +14,7 @@ class AppUser() {
 private var pid:Long? = 0
 private var pimie:MutableState<String?> = mutableStateOf("")
 private var pnazwisko:MutableState<String?> = mutableStateOf("")
+private var pimage: MutableState<Bitmap?> = mutableStateOf(null)
 
 
 init {
@@ -23,7 +27,10 @@ init {
         set_pid(0)
         set_pnazwisko("")
         set_pimie("")
+        pimage.value = null
     }
+
+
     fun get_puid() : String? {
         return FirebaseAuth.getInstance().currentUser?.uid
     }
@@ -40,6 +47,10 @@ init {
     fun set_pid(pid: Long?) { this.pid = pid }
     fun set_pimie(pimie: String?) { this.pimie.value = pimie }
     fun set_pnazwisko(pnazwisko: String?) { this.pnazwisko.value = pnazwisko }
+
+    fun set_pimage(pimage : Bitmap) { this.pimage .value= pimage}
+    fun get_pimage() : MutableState<Bitmap?> { return pimage }
+
     fun getUserData(): Map<String,MutableState<String?>> {
         val pimie = get_pimie()
         val pnazwisko = get_pnazwisko()

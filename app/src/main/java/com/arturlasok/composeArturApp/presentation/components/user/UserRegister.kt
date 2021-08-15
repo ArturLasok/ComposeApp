@@ -29,7 +29,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ruchradzionkow.ruchappartur.R
 
-@ExperimentalComposeUiApi
+
 @Composable
 fun UserRegister(navController: NavController, scaffoldState: ScaffoldState, scope: CoroutineScope,userViewViewModel: UserViewViewModel) {
 
@@ -39,7 +39,8 @@ fun UserRegister(navController: NavController, scaffoldState: ScaffoldState, sco
         val email =  rememberSaveable { mutableStateOf("") }
         val password =  rememberSaveable { mutableStateOf("") }
         val password2 =  rememberSaveable { mutableStateOf("") }
-        val keyboardController = LocalSoftwareKeyboardController.current
+
+    //val keyboardController = LocalSoftwareKeyboardController.current
         Column(modifier = Modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
@@ -198,7 +199,7 @@ fun UserRegister(navController: NavController, scaffoldState: ScaffoldState, sco
                 onClick = {
 
                     scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                    keyboardController?.hide()
+                    //keyboardController?.hide()
                     userViewViewModel.checkRegisterData(email,password,password2,scaffoldState,navController)
 
                 },

@@ -4,47 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.arturlasok.composeArturApp.FotoActivity">
-
+    tools:context="com.arturlasok.composeArturApp.presentation.components.foto.FotoActivity">
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeView"
+        android:layout_width="match_parent"
         android:layout_height="56dp"
         android:background="#FFE7D40B"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/viewFinder"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+    </androidx.compose.ui.platform.ComposeView>
 
-        <TextView
-            android:id="@+id/textView2"
-
-            style="@style/Theme.ArturFont"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_weight="1"
-            android:fontWeight="600"
-            android:paddingStart="12dp"
-            android:text="Compose App"
-            android:textAppearance="@style/Theme.ArturFont"
-
-            android:textColor="#FF0F0F0F"
-            android:textSize="18sp" />
-    </LinearLayout>
 
     <androidx.camera.view.PreviewView
         android:id="@+id/viewFinder"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@+id/composeView"
+        app:layout_constraintTop_toBottomOf="@id/composeView">
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
 
     </androidx.camera.view.PreviewView>
+
+    </LinearLayout>
+    <Button
+    android:id="@+id/camera_capture_button"
+    android:layout_width="200dp"
+    android:layout_height="50dp"
+    android:layout_marginBottom="50dp"
+    android:scaleType="fitCenter"
+    android:text="Take Photo"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:elevation="2dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,14 @@
 package com.arturlasok.composeArturApp.presentation.components.user
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.graphics.Paint
 import android.util.Log
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.camera.core.internal.utils.ImageUtil
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
@@ -18,12 +19,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.drawable.toAdaptiveIcon
+import androidx.core.graphics.drawable.toIcon
 import com.arturlasok.composeArturApp.presentation.navigation.Screen
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.google.firebase.auth.FirebaseAuth
@@ -52,16 +57,63 @@ fun UserAdminProfile(
             style = MaterialTheme.typography.h5,
             text = "Twój profil w ComposeApp")
         Row() {
-            Icon(
-                Icons.Filled.AccountBox,
-                contentDescription = "Twoje zdjęcie",
-                modifier = Modifier
-                    .size(180.dp)
-                    .clickable(
-                        true,
-                        onClick = { }),
-                tint = MaterialTheme.colors.onBackground
-            )
+
+            Log.i(TAG, "OBRAZEK: ${userAdminViewModel.getAppUser().get_pimage().value}")
+
+
+
+                if(userAdminViewModel.getAppUser().get_pimage().value!=null) {
+                   val image= userAdminViewModel.getAppUser().get_pimage().value
+
+
+                    if (image != null) {
+                        Log.i(TAG,"Image x,y ${image.height} ${image.width}")
+                        Log.i(TAG,"Image byte count ${image.byteCount}")
+
+                        Log.i(TAG,"as Imagebit x,y ${image.asImageBitmap().height} ${image.asImageBitmap().width}")
+                        Log.i(TAG,"as Imagebit colorspace ${image.asImageBitmap().colorSpace}")
+
+Image(bitmap = (image.asImageBitmap()), contentDescription = "no",modifier = Modifier.size(300.dp,300.dp))
+
+                        Icon(
+
+                            image.asImageBitmap(),
+
+
+                            contentDescription = "Twoje zdjęcie",
+                            modifier = Modifier
+                                .size(180.dp)
+                                .clickable(
+                                    true,
+                                    onClick = { }),
+
+                        )
+
+
+
+
+                    }
+
+
+                } else {
+                    Icon(
+
+                    Icons.Filled.AccountBox,
+
+                    contentDescription = "Twoje zdjęcie",
+                    modifier = Modifier
+                        .size(180.dp)
+                        .clickable(
+                            true,
+                            onClick = { }),
+                    tint = MaterialTheme.colors.onBackground
+                    )
+                       }
+
+
+
+
+
             Column(
                 modifier = Modifier.height(150.dp),
                 verticalArrangement = Arrangement.Bottom

@@ -23,7 +23,7 @@ import com.arturlasok.composeArturApp.ui.theme.RuchAppArturTheme
 import com.google.firebase.auth.FirebaseAuth
 
 
-@ExperimentalComposeUiApi
+//@ExperimentalComposeUiApi
 @Composable
 fun UserView(
     isDarkTheme: Boolean,

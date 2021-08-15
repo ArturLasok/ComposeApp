@@ -2,6 +2,7 @@ package com.arturlasok.composeArturApp
 
 import android.content.Context
 import android.os.Bundle
+import android.provider.AlarmClock
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -37,10 +38,12 @@ import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_foto.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import ruchradzionkow.ruchappartur.R
 import java.util.concurrent.Executor
 import javax.inject.Inject
 
@@ -48,7 +51,7 @@ import javax.inject.Inject
 // Datastore init
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "ustawienia")
 @AndroidEntryPoint
-@ExperimentalComposeUiApi
+//@ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
 
     @Inject
@@ -86,6 +89,10 @@ class MainActivity : ComponentActivity() {
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
+            // Dane z intent
+            val message = intent.getStringExtra("EXTRA_MSG").orEmpty()
+            Log.i(TAG, "Extra message $message")
+
 
 
         setContent {
@@ -102,19 +109,18 @@ class MainActivity : ComponentActivity() {
                     // NAWIGUJ DO LISTY WIADOMOSCI
                     composable(Screen.ListaWiadomosci.route)
                         { navBackStackEntry ->
-                       val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
-                       val viewModel: ListaWiadomosciViewModel =
-                           viewModel(key = "ListaWiadomosciViewModel",factory = factory)
 
-                            ListaWiadomosci(
-                                navController = navController,
-                                listaWiadomosciviewModel = viewModel,
-                                isNetworkAvailable = isOnline.isNetworkAvailable.value,
-                                isConMonVis = isConMonVis.value,
-                                isDarkTheme = ustawieniaDataStore.isDark.value,
+                                val factory = HiltViewModelFactory(LocalContext.current, navBackStackEntry)
+                                val viewModel: ListaWiadomosciViewModel =
+                                    viewModel(key = "ListaWiadomosciViewModel",factory = factory)
 
-
-                            )
+                                ListaWiadomosci(
+                                    navController = navController,
+                                    listaWiadomosciviewModel = viewModel,
+                                    isNetworkAvailable = isOnline.isNetworkAvailable.value,
+                                    isConMonVis = isConMonVis.value,
+                                    isDarkTheme = ustawieniaDataStore.isDark.value,
+                                    )
 
                     }
                     // NAWIGUJ DO SZCZEGOLY WIADOMOSCI

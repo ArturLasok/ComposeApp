@@ -4,22 +4,22 @@ import android.content.Intent
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.*
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arturlasok.composeArturApp.BaseApplication
-import com.arturlasok.composeArturApp.FotoActivity
-import com.arturlasok.composeArturApp.Hilt_MainActivity
+import com.arturlasok.composeArturApp.presentation.components.foto.FotoActivity
 import com.arturlasok.composeArturApp.domain.model.AppUser
 import com.arturlasok.composeArturApp.interactors.GetUser
 import com.arturlasok.composeArturApp.presentation.util.TAG
 import com.arturlasok.composeArturApp.presentation.util.isOnline
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.internal.aggregatedroot.codegen._com_arturlasok_composeArturApp_BaseApplication
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 import javax.inject.Named
+
 
 @HiltViewModel
 class UserAdminViewModel @Inject constructor(
@@ -58,8 +58,11 @@ class UserAdminViewModel @Inject constructor(
         fun setFirebaseLang() {
             FirebaseAuth.getInstance().setLanguageCode("pl-PL")
         }
+        fun getAppUser(): AppUser {
+            return appUser
+        }
+         //events in Admin
 
-        //events in Admin
         fun setEvent(event: UserAdminEvent) {
             try {
 
@@ -78,6 +81,7 @@ class UserAdminViewModel @Inject constructor(
             }
         }
 // EVENT FotoActivity open
+
 fun FotoActivityIntent() {
     try {
         val intent_message = FirebaseAuth.getInstance().currentUser?.uid

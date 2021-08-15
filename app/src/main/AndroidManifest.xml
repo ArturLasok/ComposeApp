@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.arturlasok.composeArturApp.FotoActivity"
+            android:name="com.arturlasok.composeArturApp.presentation.components.foto.FotoActivity"
 
             android:theme="@style/Theme.RuchAppArtur"
             android:exported="true" />

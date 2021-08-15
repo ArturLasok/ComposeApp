@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.CoroutineScope
 import ruchradzionkow.ruchappartur.R
 
-@ExperimentalComposeUiApi
+
 @Composable
 fun UserPass(
     navController: NavController,
@@ -32,7 +32,7 @@ fun UserPass(
 
 
     val email = rememberSaveable { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
+    //val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         modifier = Modifier
@@ -118,7 +118,7 @@ fun UserPass(
             enabled = userViewViewModel.passRecButtonEnable.value,
             onClick = {
                 scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()
-                keyboardController?.hide()
+                //keyboardController?.hide()
                 userViewViewModel.checkPassRecoveryData(email,scaffoldState,navController)
 
             },
